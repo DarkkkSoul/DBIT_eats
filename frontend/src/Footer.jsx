@@ -8,13 +8,6 @@ function Footer() {
                         <img src="/creatorsImages/ds.png" className='w-7.5' />
                     </a>
                 </div>
-                <div className='flex items-center gap-x-1.5'>
-                    <div className='pt-0.5'>Idea By</div>
-                    <div>
-                        <a href="https://www.linkedin.com/in/madhan-k-u/" target="_blank">
-                            <img src="/creatorsImages/linkedin.png" className='w-6' />
-                        </a></div>
-                </div>
             </div>
             <div className='flex flex-col justify-between'>
                 <div>Peace Out!</div>
