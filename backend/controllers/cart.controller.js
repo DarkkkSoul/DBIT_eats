@@ -1,8 +1,9 @@
 import Cart from "../models/cart.model.js";
+import connectToDb from "../database/connectToDb.js";
 
 export const sentCartData = async (req, res, next) => {
     try {
-
+        await connectToDb();
         const cartDetails = await Cart.create({ ...req.body, orderBy: req.user.name });
 
         res.status(200).json({
@@ -18,7 +19,7 @@ export const sentCartData = async (req, res, next) => {
 
 export const viewCartData = async (req, res, next) => {
     try {
-
+        await connectToDb();
         const completeCart = await Cart.find().sort({ createdAt: -1 });
 
         res.status(200).json({
@@ -34,6 +35,7 @@ export const viewCartData = async (req, res, next) => {
 
 export const viewHistory = async (req, res, next) => {
     try {
+        await connectToDb();
         const history = await Cart.find({ orderBy: req.user.name }).sort({ createdAt: -1 });
 
         res.status(200).json({
@@ -48,6 +50,7 @@ export const viewHistory = async (req, res, next) => {
 
 export const updateStatus = async (req, res, next) => {
     try {
+        await connectToDb();
         const { cartid } = req.params;
 
         const cart = await Cart.findById(cartid);
@@ -74,6 +77,7 @@ export const updateStatus = async (req, res, next) => {
 
 export const deleteCart = async (req, res, next) => {
     try {
+        await connectToDb();
         console.log(Date.now());
     } catch {
         next(error);

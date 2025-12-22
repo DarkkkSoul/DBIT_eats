@@ -44,12 +44,13 @@ function Total() {
             // if (isSoldOut) {
             //     console.log(`${soldOutFood} is sold out!`);
             // } else {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/cart/checkout`, {
                 method: 'POST',
-                credentials: 'include',
                 body: JSON.stringify({ cartDetails: cleanCart }),
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
                 },
             });
 

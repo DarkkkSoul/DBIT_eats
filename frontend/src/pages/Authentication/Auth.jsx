@@ -22,8 +22,7 @@ function Auth() {
         body: JSON.stringify({ email, password }),
         headers: {
           "Content-Type": "application/json",
-        },
-        credentials: 'include',
+        }
       });
 
       const data = await response.json();
@@ -31,6 +30,7 @@ function Auth() {
       if (response.ok) {
         setLoding(false);
         setMessage(data.message);
+        localStorage.setItem('token', data.data.token);
         setTimeout(() => {
           if (data.data.user.email === 'admin@gmail.com') {
             navigate('/admin/cafeteria');

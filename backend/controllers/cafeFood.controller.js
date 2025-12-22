@@ -1,7 +1,9 @@
 import CafeFood from "../models/cafeFood.model.js";
+import connectToDb from "../database/connectToDb.js";
 
 export const createCafeFood = async (req, res, next) => {
     try {
+        await connectToDb();
         if (req.user.email === 'admin@gmail.com') {
             const cafeFood = await CafeFood.create({ ...req.body, createdBy: req.user.name });
 
@@ -24,7 +26,7 @@ export const createCafeFood = async (req, res, next) => {
 
 export const showCafeMenu = async (req, res, next) => {
     try {
-
+        await connectToDb();
         const cafeMenu = await CafeFood.find();
 
         res.status(200).json({
@@ -43,6 +45,7 @@ export const showCafeMenu = async (req, res, next) => {
 
 export const itemSoldOut = async (req, res, next) => {
     try {
+        await connectToDb();
         const { id } = req.params;
 
         const foodItem = await CafeFood.findById(id);
@@ -64,6 +67,7 @@ export const itemSoldOut = async (req, res, next) => {
 
 export const itemAvailable = async (req, res, next) => {
     try {
+        await connectToDb();
         const { id } = req.params;
 
         const foodItem = await CafeFood.findById(id);

@@ -1,7 +1,9 @@
 import CanteenFood from "../models/canteenFood.model.js";
+import connectToDb from "../database/connectToDb.js";
 
 export const createCanteenFood = async (req, res, next) => {
     try {
+        await connectToDb();
         if (req.user.email === 'admin@gmail.com') {
             const canteenFood = await CanteenFood.create({ ...req.body, createdBy: req.admin.name });
 
@@ -24,6 +26,7 @@ export const createCanteenFood = async (req, res, next) => {
 
 export const showCanteenMenu = async (req, res, next) => {
     try {
+        await connectToDb();
         const canteenMenu = await CanteenFood.find();
 
         res.status(200).json({

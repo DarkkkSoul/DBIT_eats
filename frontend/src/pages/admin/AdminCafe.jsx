@@ -15,11 +15,12 @@ function AdminCafe() {
     const handleCafeteriaSubmit = async (e) => {
         e.preventDefault();
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/cafeteria/add`, {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ foodName, price })
             });
@@ -65,9 +66,12 @@ function AdminCafe() {
     useEffect(() => {
         const displayCafeFood = async () => {
             try {
+                const token = localStorage.getItem('token');
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/cafeteria/menu`, {
                     method: 'GET',
-                    credentials: 'include'
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 const data = await response.json();
@@ -92,12 +96,16 @@ function AdminCafe() {
 
     const handleLogout = async () => {
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/logout`, {
                 method: 'POST',
-                credentials: 'include'
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.ok) {
+                localStorage.removeItem('token');
                 setTimeout(() => {
                     navigate('/');
                 }, 300);

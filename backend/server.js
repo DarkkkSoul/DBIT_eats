@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 import cafeFoodRouter from './routes/cafeFood.route.js';
 import canteenFoodRouter from './routes/canteenFood.route.js';
 import errorMiddleware from './middlewares/error.middleware.js';
-import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import cartRouter from './routes/cart.route.js';
 
@@ -24,7 +23,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // routes
 app.use('/api/v1/auth', authRouter);
@@ -40,7 +38,11 @@ app.get('/', (req, res) => {
     res.send('<h2>Welcome to the backend of Foobia</h2>')
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`);
-    connectToDb();
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`App running on - http://localhost:${port}`);
+        connectToDb();
+    });
+}
+
+export default app;

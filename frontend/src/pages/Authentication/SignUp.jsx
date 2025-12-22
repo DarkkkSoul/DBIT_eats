@@ -20,8 +20,7 @@ function SignUp() {
             body: JSON.stringify({ name: signInName, email: signInEmail, password: signInPassword }),
             headers: {
                "Content-Type": "application/json",
-            },
-            credentials: 'include',
+            }
          });
 
          const data = await response.json();
@@ -29,6 +28,7 @@ function SignUp() {
          if (response.ok) {
             setLoding(false);
             setSignInMessage(data.message);
+            localStorage.setItem('token', data.data.token);
             setTimeout(() => {
                if (data.data.user.email === 'admin@gmail.com') {
                   navigate('/admin/cafeteria');

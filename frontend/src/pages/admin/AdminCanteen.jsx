@@ -14,11 +14,12 @@ function AdminCanteen() {
     const handleCanteenSubmit = async (e) => {
         e.preventDefault();
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/canteen/add`, {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ foodName, price })
             });
@@ -64,9 +65,12 @@ function AdminCanteen() {
     useEffect(() => {
         const displayCanteenFood = async () => {
             try {
+                const token = localStorage.getItem('token');
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/canteen/menu`, {
                     method: 'GET',
-                    credentials: 'include'
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 const data = await response.json();
@@ -86,12 +90,16 @@ function AdminCanteen() {
 
     const handleLogout = async () => {
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/logout`, {
                 method: 'POST',
-                credentials: 'include'
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.ok) {
+                localStorage.removeItem('token');
                 navigate('/');
             }
         } catch (error) {

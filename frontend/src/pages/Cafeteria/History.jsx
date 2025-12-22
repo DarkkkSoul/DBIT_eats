@@ -10,9 +10,12 @@ function History() {
     useEffect(() => {
         const viewHistory = async () => {
             try {
+                const token = localStorage.getItem('token');
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/cart/cafeteria/history`, {
                     method: 'GET',
-                    credentials: 'include'
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 const data = await response.json();

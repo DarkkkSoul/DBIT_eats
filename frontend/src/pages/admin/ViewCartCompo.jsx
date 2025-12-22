@@ -4,9 +4,12 @@ function ViewCartCompo(props) {
 
     const handleStatus = async (id) => {
 
+        const token = localStorage.getItem('token');
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/cart/cafeteria/update-status/${id}`, {
             method: 'PUT',
-            credentials: 'include'
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         const data = await response.json();
